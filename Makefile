@@ -6,13 +6,16 @@ LIBNAME=lib$(LIB)
 SRC_DIR=src
 LIB_DIR=lib
 BIN_DIR=bin
-INC_DIR=include
+INC_DIR=include/ss++
 RM=rm -f
 CP=cp -rf
 LINK=ln -s
+MKDIR=mkdir -p
+RMDIR=rmdir
 CLIENT=ClientSocket
 SERVER=ServerSocket
 SOCKET=Socket
+EXCEPTION=SocketException
 CLIENTAPP=simple_client_main
 SERVERAPP=simple_server_main
 TARGET=/usr
@@ -25,9 +28,11 @@ install:
 	$(CP) $(LIB_DIR)/$(LIBNAME).so.0.0 $(TARGET)/lib/
 	$(CP) $(LIB_DIR)/$(LIBNAME).so.0 $(TARGET)/lib/
 	$(CP) $(LIB_DIR)/$(LIBNAME).so $(TARGET)/lib/
-	$(CP) $(INC_DIR)/$(CLIENT).h $(TARGET)/include/
-	$(CP) $(INC_DIR)/$(SERVER).h $(TARGET)/include/
-	$(CP) $(INC_DIR)/$(SOCKET).h $(TARGET)/include/
+	$(MKDIR) $(TARGET)/include/ss++
+	$(CP) $(INC_DIR)/$(CLIENT).h $(TARGET)/include/ss++/
+	$(CP) $(INC_DIR)/$(SERVER).h $(TARGET)/include/ss++/
+	$(CP) $(INC_DIR)/$(SOCKET).h $(TARGET)/include/ss++/
+	$(CP) $(INC_DIR)/$(EXCEPTION).h $(TARGET)/include/ss++/
 #	$(CP) $(BIN_DIR)/$(CLIENTAPP) $(TARGET)/bin/
 #	$(CP) $(BIN_DIR)/$(SERVERAPP) $(TARGET)/bin/
 
@@ -35,9 +40,11 @@ uninstall:
 	$(RM) $(TARGET)/lib/$(LIBNAME).so.0.0
 	$(RM) $(TARGET)/lib/$(LIBNAME).so.0
 	$(RM) $(TARGET)/lib/$(LIBNAME).so
-	$(RM) $(TARGET)/include/$(CLIENT)
-	$(RM) $(TARGET)/include/$(SERVER)
-	$(RM) $(TARGET)/include/$(SOCKET)
+	$(RM) $(TARGET)/include/ss++/$(CLIENT).h
+	$(RM) $(TARGET)/include/ss++/$(SERVER).h
+	$(RM) $(TARGET)/include/ss++/$(SOCKET).h
+	$(RM) $(TARGET)/include/ss++/$(EXCEPTION).h
+	$(RMDIR) $(TARGET)/include/ss++
 #	$(RM) $(TARGET)/bin/$(CLIENTAPP)
 #	$(RM) $(TARGET)/bin/$(SERVERAPP)
 
