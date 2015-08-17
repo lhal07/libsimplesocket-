@@ -40,3 +40,9 @@ const ClientSocket& ClientSocket::operator >> ( std::string& s ) const
 
   return *this;
 }
+
+
+bool ClientSocket::isConnected()
+{
+  return Socket::is_connected();
+}

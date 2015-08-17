@@ -16,6 +16,8 @@ class ClientSocket : private Socket
     const ClientSocket& operator << ( const std::string& ) const;
     const ClientSocket& operator >> ( std::string& ) const;
 
+    bool isConnected();
+
 };
 
 

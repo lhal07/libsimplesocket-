@@ -189,3 +189,11 @@ void Socket::set_non_blocking ( const bool b )
       F_SETFL,opts );
 
 }
+
+bool Socket::is_connected()
+{
+  int error_code;
+  socklen_t error_code_size = sizeof(error_code);
+  if (!getsockopt(m_sock, SOL_SOCKET, SO_ERROR, &error_code, &error_code_size)) return true;
+  return true;
+}
