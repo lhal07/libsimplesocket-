@@ -19,7 +19,7 @@ int main ( int argc, int argv[] )
     }
     catch ( SocketException& ) {}
 
-    std::cout << "We received this response from the server:\n\"" << reply << "\"\n";;
+    std::cout << "We received this response from the server:\n\"" << reply << "\"\n";
 
   }
   catch ( SocketException& e )
