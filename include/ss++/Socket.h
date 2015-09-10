@@ -35,6 +35,7 @@ class Socket
   // Data Transimission
   bool send ( const std::string ) const;
   int recv ( std::string& ) const;
+  int recv_timeout ( std::string&, int timeout ) const;
 
 
   void set_non_blocking ( const bool );

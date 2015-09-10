@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <iostream>
+#include <sys/time.h>
 
 
 Socket::Socket() :
@@ -146,6 +147,59 @@ int Socket::recv ( std::string& s ) const
   }
 }
 
+
+int Socket::recv_timeout ( std::string& s , int timeout) const
+{
+    int size_recv , total_size= 0;
+    struct timeval begin , now;
+    char chunk[MAXRECV + 1];
+    double timediff;
+     
+    s = "";
+    memset ( chunk, 0, MAXRECV + 1 );
+
+    //make socket non blocking
+    fcntl(m_sock, F_SETFL, O_NONBLOCK);
+     
+    //beginning time
+    gettimeofday(&begin , NULL);
+     
+    while(1)
+    {
+        gettimeofday(&now , NULL);
+         
+        //time elapsed in seconds
+        timediff = (now.tv_sec - begin.tv_sec) + 1e-6 * (now.tv_usec - begin.tv_usec);
+         
+        //if you got some data, then break after timeout
+        if( total_size > 0 && timediff > timeout )
+        {
+            break;
+        }
+         
+        else if( timediff > timeout)
+        {
+            gettimeofday(&begin , NULL);
+        }
+         
+        memset(chunk ,0 , MAXRECV);  //clear the variable
+        if((size_recv =  ::recv(m_sock , chunk , MAXRECV , 0) ) < 0)
+        {
+            //if nothing was received then we want to wait a little before trying again, 0.1 seconds
+            usleep(100000);
+        }
+        else
+        {
+            total_size += size_recv;
+            s += std::string(chunk);
+            //printf("%s" , chunk);
+            //reset beginning time
+            gettimeofday(&begin , NULL);
+        }
+    }
+     
+    return total_size;
+}
 
 
 bool Socket::connect ( const std::string host, const int port )

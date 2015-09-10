@@ -33,7 +33,7 @@ const ClientSocket& ClientSocket::operator << ( const std::string& s ) const
 
 const ClientSocket& ClientSocket::operator >> ( std::string& s ) const
 {
-  if ( ! Socket::recv ( s ) )
+  if ( ! Socket::recv_timeout ( s , 1 ) )
     {
       throw SocketException ( "Could not read from socket." );
     }
