@@ -2,11 +2,13 @@ CC=g++ -O3
 OBJ_LINK= -fPIC -Wall -c
 SHR_LINK = -shared
 LIB=simplesocket++
+VER=0.1-0
 LIBNAME=lib$(LIB)
 SRC_DIR=src
 LIB_DIR=lib
 BIN_DIR=bin
 INC_DIR=include/ss++
+PKG_DIR=debian
 RM=rm -f
 CP=cp -rf
 LINK=ln -s
@@ -19,10 +21,12 @@ EXCEPTION=SocketException
 CLIENTAPP=simple_client_main
 SERVERAPP=simple_server_main
 TARGET=/usr
+PKG_NAME=libsimplesocketpp
+PACKAGE=$(PKG_NAME)-$(VER).deb
 
 default: lib bin
 
-all: lib bin install
+all: lib bin package
 
 install:
 	$(CP) $(LIB_DIR)/$(LIBNAME).so.0.0 $(TARGET)/lib/
@@ -47,6 +51,10 @@ uninstall:
 	$(RMDIR) $(TARGET)/include/ss++
 #	$(RM) $(TARGET)/bin/$(CLIENTAPP)
 #	$(RM) $(TARGET)/bin/$(SERVERAPP)
+
+package:
+	dpkg-deb --build $(PKG_DIR)/$(PKG_NAME)
+	mv $(PKG_DIR)/$(PKG_NAME).deb $(PKG_DIR)/$(PACKAGE)
 
 lib_dir:
 	mkdir -p $(LIB_DIR)
@@ -89,4 +97,5 @@ clean:
 	$(RM) $(SRC_DIR)/$(SOCKET).o
 	$(RM) $(BIN_DIR)/$(CLIENTAPP)
 	$(RM) $(BIN_DIR)/$(SERVERAPP)
+	$(RM) $(PKG_DIR)/$(PACKAGE)
 

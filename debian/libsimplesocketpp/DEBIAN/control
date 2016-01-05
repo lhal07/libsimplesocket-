@@ -1,0 +1,9 @@
+Package: libsimplesocketpp
+Version: 0.1-0
+Section: base
+Priority: optional
+Architecture: armhf
+Depends: 
+Maintainer: Luis Lourenco <luis.lourenco@grupoabl.com.br>
+Description: Simple Socket Libary
+ Simple socket library implemented in C++ using OO

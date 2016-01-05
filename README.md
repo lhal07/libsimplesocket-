@@ -8,13 +8,17 @@ http://tldp.org/LDP/LG/issue74/tougher.html
 
 - How to compile:
 
-$ make all     # Compile library and binary
+$ make all     # Compile library, binary and make package
 
 $ make lib     # Compile just the library
 
 $ make bin     # Compile just the binary
 
-$ make install # Install binaries
+$ make package # Make Debian Package
+
+$ make install # Install binaries (deprecated)
+
+$ make uninstall # Remove binaries (deprecated)
 
 $ make clean   # Remove all builded files
 
