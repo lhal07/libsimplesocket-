@@ -52,7 +52,11 @@ uninstall:
 #	$(RM) $(TARGET)/bin/$(CLIENTAPP)
 #	$(RM) $(TARGET)/bin/$(SERVERAPP)
 
-package:
+package: lib
+	$(MKDIR) $(PKG_DIR)/$(PKG_NAME)/$(TARGET)/lib
+	$(MKDIR) $(PKG_DIR)/$(PKG_NAME)/$(TARGET)/include
+	$(CP) $(LIB_DIR)/$(LIBNAME).so.0.0 $(PKG_DIR)/$(PKG_NAME)/$(TARGET)/lib/
+	$(CP) $(INC_DIR) $(PKG_DIR)/$(PKG_NAME)/$(TARGET)/include
 	dpkg-deb --build $(PKG_DIR)/$(PKG_NAME)
 	mv $(PKG_DIR)/$(PKG_NAME).deb $(PKG_DIR)/$(PACKAGE)
 
@@ -97,5 +101,6 @@ clean:
 	$(RM) $(SRC_DIR)/$(SOCKET).o
 	$(RM) $(BIN_DIR)/$(CLIENTAPP)
 	$(RM) $(BIN_DIR)/$(SERVERAPP)
+	$(RM) -r $(PKG_DIR)/$(PKG_NAME)/$(TARGET)
 	$(RM) $(PKG_DIR)/$(PACKAGE)
 
